@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "7d047e86-a7b4-438a-97ee-52d25fee9859",
+		"name": "Dropbox HW2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21000346"
+	},
+	"item": [
+		{
+			"name": "Upload file picture.png",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"File uploaded correctly\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(\"picture.png\");\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"id\", jsonData.id)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Dropbox-API-Arg",
+						"value": "{\"path\": \"/TA-SP_HW2/picture.png\", \"mode\": \"add\"}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/octet-stream",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "file",
+					"file": {
+						"src": "picture.png"
+					}
+				},
+				"url": {
+					"raw": "https://content.dropboxapi.com/2/files/upload/",
+					"protocol": "https",
+					"host": [
+						"content",
+						"dropboxapi",
+						"com"
+					],
+					"path": [
+						"2",
+						"files",
+						"upload",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFileMetadata",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Metadata recieved correctly\", function () {\r",
+							"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"id\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Dropbox-API-Path-Root",
+						"name": "Dropbox-API-Path-Root",
+						"type": "text",
+						"value": "{\".tag\": \"namespace_id\", \"namespace_id\": \"2\"}",
+						"disabled": true
+					},
+					{
+						"key": "Dropbox-API-Select-User",
+						"name": "Dropbox-API-Select-User",
+						"type": "text",
+						"value": "dbmid:FDFSVF-DFSDF",
+						"disabled": true
+					},
+					{
+						"key": "Dropbox-API-Select-Admin",
+						"name": "Dropbox-API-Select-Admin",
+						"type": "text",
+						"value": "dbmid:FDFSVF-DFSDF",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"file\": \"{{id}}\"\n}"
+				},
+				"url": {
+					"raw": "https://api.dropboxapi.com/2/sharing/get_file_metadata",
+					"protocol": "https",
+					"host": [
+						"api",
+						"dropboxapi",
+						"com"
+					],
+					"path": [
+						"2",
+						"sharing",
+						"get_file_metadata"
+					]
+				},
+				"description": "[get_file_metadata](https://www.dropbox.com/developers/documentation/http/documentation#sharing-get_file_metadata)\n\nscope: `sharing.read`\n\nReturns shared file metadata."
+			},
+			"response": [
+				{
+					"name": "get_file_metadata response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Dropbox-API-Path-Root",
+								"name": "Dropbox-API-Path-Root",
+								"type": "text",
+								"value": "{\".tag\": \"namespace_id\", \"namespace_id\": \"2\"}",
+								"disabled": true
+							},
+							{
+								"key": "Dropbox-API-Select-User",
+								"name": "Dropbox-API-Select-User",
+								"type": "text",
+								"value": "dbmid:FDFSVF-DFSDF",
+								"disabled": true
+							},
+							{
+								"key": "Dropbox-API-Select-Admin",
+								"name": "Dropbox-API-Select-Admin",
+								"type": "text",
+								"value": "dbmid:FDFSVF-DFSDF",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"file\": \"id:3kmLmQFnf1AAAAAAAAAAAw\", \n    \"actions\": []\n}"
+						},
+						"url": {
+							"raw": "https://api.dropboxapi.com/2/sharing/get_file_metadata",
+							"protocol": "https",
+							"host": [
+								"api",
+								"dropboxapi",
+								"com"
+							],
+							"path": [
+								"2",
+								"sharing",
+								"get_file_metadata"
+							]
+						},
+						"description": "[get_file_metadata](https://www.dropbox.com/developers/documentation/http/documentation#sharing-get_file_metadata)\n\nscope: `sharing.read`\n\nReturns shared file metadata."
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Dropbox-Request-Id",
+							"value": "1234"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"id:3kmLmQFnf1AAAAAAAAAAAw\", \n    \"name\": \"file.txt\", \n    \"policy\": {\n        \"acl_update_policy\": {\n            \".tag\": \"owner\"\n        }, \n        \"shared_link_policy\": {\n            \".tag\": \"anyone\"\n        }, \n        \"member_policy\": {\n            \".tag\": \"anyone\"\n        }, \n        \"resolved_member_policy\": {\n            \".tag\": \"team\"\n        }\n    }, \n    \"preview_url\": \"https://www.dropbox.com/scl/fi/fir9vjelf\", \n    \"access_type\": {\n        \".tag\": \"viewer\"\n    }, \n    \"owner_display_names\": [\n        \"Jane Doe\"\n    ], \n    \"owner_team\": {\n        \"id\": \"dbtid:AAFdgehTzw7WlXhZJsbGCLePe8RvQGYDr-I\", \n        \"name\": \"Acme, Inc.\"\n    }, \n    \"path_display\": \"/dir/file.txt\", \n    \"path_lower\": \"/dir/file.txt\", \n    \"permissions\": [], \n    \"time_invited\": \"2016-01-20T00:00:00Z\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete file picture.png",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const isDeleted = pm.environment.get(\"id\");\r",
+							"\r",
+							" \r",
+							"if(!isDeleted){\r",
+							"    pm.test(\"File successfully deleted\", function () {\r",
+							"    pm.response.to.not.have.status(200);\r",
+							"\r",
+							"})\r",
+							"}else{\r",
+							"pm.test(\"File successfully deleted\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.environment.unset(\"id\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Dropbox-API-Path-Root",
+						"name": "Dropbox-API-Path-Root",
+						"type": "text",
+						"value": "{\".tag\": \"namespace_id\", \"namespace_id\": \"2\"}",
+						"disabled": true
+					},
+					{
+						"key": "Dropbox-API-Select-User",
+						"name": "Dropbox-API-Select-User",
+						"type": "text",
+						"value": "dbmid:FDFSVF-DFSDF",
+						"disabled": true
+					},
+					{
+						"key": "Dropbox-API-Select-Admin",
+						"name": "Dropbox-API-Select-Admin",
+						"type": "text",
+						"value": "dbmid:FDFSVF-DFSDF",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"path\": \"/TA-SP_HW2/picture.png\"\n}"
+				},
+				"url": {
+					"raw": "https://api.dropboxapi.com/2/files/delete_v2",
+					"protocol": "https",
+					"host": [
+						"api",
+						"dropboxapi",
+						"com"
+					],
+					"path": [
+						"2",
+						"files",
+						"delete_v2"
+					]
+				},
+				"description": "[delete](https://www.dropbox.com/developers/documentation/http/documentation#files-delete)\n\nscope: `files.content.write`\n\nDelete the file or folder at a given path.\nIf the path is a folder, all its contents will be deleted too.\nA successful response indicates that the file or folder was deleted. The returned metadata will be the corresponding `FileMetadata` or `FolderMetadata` for the item at time of deletion, and not a `DeletedMetadata` object."
+			},
+			"response": [
+				{
+					"name": "delete response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Dropbox-API-Path-Root",
+								"name": "Dropbox-API-Path-Root",
+								"type": "text",
+								"value": "{\".tag\": \"namespace_id\", \"namespace_id\": \"2\"}",
+								"disabled": true
+							},
+							{
+								"key": "Dropbox-API-Select-User",
+								"name": "Dropbox-API-Select-User",
+								"type": "text",
+								"value": "dbmid:FDFSVF-DFSDF",
+								"disabled": true
+							},
+							{
+								"key": "Dropbox-API-Select-Admin",
+								"name": "Dropbox-API-Select-Admin",
+								"type": "text",
+								"value": "dbmid:FDFSVF-DFSDF",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"path\": \"/Homework/math/Prime_Numbers.txt\"\n}"
+						},
+						"url": {
+							"raw": "https://api.dropboxapi.com/2/files/delete_v2",
+							"protocol": "https",
+							"host": [
+								"api",
+								"dropboxapi",
+								"com"
+							],
+							"path": [
+								"2",
+								"files",
+								"delete_v2"
+							]
+						},
+						"description": "[delete](https://www.dropbox.com/developers/documentation/http/documentation#files-delete)\n\nscope: `files.content.write`\n\nDelete the file or folder at a given path.\nIf the path is a folder, all its contents will be deleted too.\nA successful response indicates that the file or folder was deleted. The returned metadata will be the corresponding `FileMetadata` or `FolderMetadata` for the item at time of deletion, and not a `DeletedMetadata` object."
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Dropbox-Request-Id",
+							"value": "1234"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"metadata\": {\n        \".tag\": \"file\", \n        \"name\": \"Prime_Numbers.txt\", \n        \"id\": \"id:a4ayc_80_OEAAAAAAAAAXw\", \n        \"client_modified\": \"2015-05-12T15:50:38Z\", \n        \"server_modified\": \"2015-05-12T15:50:38Z\", \n        \"rev\": \"a1c10ce0dd78\", \n        \"size\": 7212, \n        \"path_lower\": \"/homework/math/prime_numbers.txt\", \n        \"path_display\": \"/Homework/math/Prime_Numbers.txt\", \n        \"sharing_info\": {\n            \"read_only\": true, \n            \"parent_shared_folder_id\": \"84528192421\", \n            \"modified_by\": \"dbid:AAH4f99T0taONIb-OurWxbNQ6ywGRopQngc\"\n        }, \n        \"is_downloadable\": true, \n        \"property_groups\": [\n            {\n                \"template_id\": \"ptid:1a5n2i6d3OYEAAAAAAAAAYa\", \n                \"fields\": [\n                    {\n                        \"name\": \"Security Policy\", \n                        \"value\": \"Confidential\"\n                    }\n                ]\n            }\n        ], \n        \"has_explicit_shared_members\": false, \n        \"content_hash\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \n        \"file_lock_info\": {\n            \"is_lockholder\": true, \n            \"lockholder_name\": \"Imaginary User\", \n            \"created\": \"2015-05-12T15:50:38Z\"\n        }\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "tokenType",
+				"value": "bearer",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "sl.BRBu-IF8tUoIwP7nnsa_eBCClqb2yyfHCZym2ytJMr41rs1RjrZ7pOBCr6ohVTK8u3nmdYmR_3LA6ZR3RKYWcdjOzAvRltTLRtmtwZbMDh5N_r1bARUmmdjvZMnHzhb0er2Hu_w",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "files.content.write sharing.read",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "dropboxToken",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code",
+				"type": "string"
+			},
+			{
+				"key": "challengeAlgorithm",
+				"value": "S256",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": true,
+				"type": "boolean"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/callback",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{appSecret}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{appKey}}",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://www.dropbox.com/oauth2/authorize",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://api.dropboxapi.com/oauth2/token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
