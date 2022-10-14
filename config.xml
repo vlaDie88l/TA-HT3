@@ -1,0 +1,21 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <description>Dropbox API</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.BatchFile>
+      <command>newman run &quot;https://api.getpostman.com/collections/21000346-7d047e86-a7b4-438a-97ee-52d25fee9859?apikey=PMAK-634423572ea9f93973cbf568-b9167e3328da78ed770b9d6d3d5b477a5b&quot; --environment &quot;https://api.getpostman.com/environments?apikey=PMAK-634423572ea9f93973cbf568-b9167e3328da78ed770b9d6d3d5b477a5b&quot;</command>
+      <configuredLocalRules/>
+    </hudson.tasks.BatchFile>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
